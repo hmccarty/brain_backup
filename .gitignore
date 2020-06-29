@@ -1,0 +1,13 @@
+# See https://github.com/github/gitignore/blob/master/Python.gitignore
+
+# Byte-copiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Flask:
+instance/
+.webassets-cache
+
+# Environments
+venv/
