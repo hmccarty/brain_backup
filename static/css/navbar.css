@@ -1,0 +1,13 @@
+.h1 {
+    font-family: "Lucida Bright", sans-serif;
+}
+
+nav {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+a {
+    font-family: "Lucida Bright", sans-serif;
+    text-decoration: None;
+}

@@ -1,5 +1,3 @@
-# See https://github.com/github/gitignore/blob/master/Python.gitignore
-
 # Byte-copiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -11,3 +9,5 @@ instance/
 
 # Environments
 venv/
+
+# See https://github.com/github/gitignore/blob/master/Python.gitignore
