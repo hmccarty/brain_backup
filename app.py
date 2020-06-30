@@ -1,7 +1,9 @@
 import cms
 
 from flask import Flask
+from flask import render_template
 app = Flask(__name__)
+cms.init()
 
 @app.route('/')
 def home():
