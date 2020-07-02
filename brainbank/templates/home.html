@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="content">
+        {% for i in range(1) %}
+            {% include 'post-snippet.html' %}
+        {% endfor %}
+    </div>
+{% endblock %}

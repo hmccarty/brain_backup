@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>{{title}}</title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+    </head>
+    <body>
+        <div class="layout">
+            {% include 'navbar.html' %}
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>
