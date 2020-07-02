@@ -75,16 +75,41 @@ def get_posts(startDate=None, endDate=None, orderByDate=False, \
 
     return query_db(query, tuple(args))
 
+def get_tags(post_ref=None):
+    query = 'SELECT * FROM '
+    query += 'post_tag INNER JOIN tag ON post_tag.tag_ref = tag.id '
+    
+    if post_id:
+        query += 'WHERE '
+        query += '? = post_tag.post_ref '
+        args.append(id)
+
+    return query_db(query, tuple(args))
+
 def add_post(path):
     db = get_db()
     post = Frontmatter.read_file(path)
 
     sql = ('INSERT INTO post(title, description, body) '
            'VALUES (?, ?, ?)')
-    print(post)
     db.cursor().execute(sql, (post['attributes']['title'],
                               post['attributes']['description'],
                               post['body']))
+    db.commit()
+
+    tags = post['attributes']['tags']
+    for tag in tags:
+        print(tag)
+        query = ('SELECT * FROM tag WHERE tag.name = ?')
+        if db.execute(query, (tag)).fetchall() == None:
+            sql = ('INSERT INTO tag(name) '
+                'VALUES (?)')
+            db.cursor().execute(sql, (tag))
+        
+        sql = ('INSERT INTO post_tag(post_ref, tag_ref) '
+            'VALUES (?, ?)')
+        db.cursor().execute(sql, (tag))
+    
     db.commit()
     return True
 
