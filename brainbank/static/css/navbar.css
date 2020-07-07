@@ -1,13 +1,19 @@
-.h1 {
-    font-family: "Lucida Bright", sans-serif;
+header {
+    align-items: center;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+}
+
+h1 {
+    margin: 10px 0;
 }
 
 nav {
     display: flex;
     justify-content: space-evenly;
-}
-
-a {
-    font-family: "Lucida Bright", sans-serif;
-    text-decoration: None;
+    margin: 10px 0 15px 0;
+    width: 500px;
 }

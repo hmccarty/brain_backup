@@ -1,5 +1,7 @@
 <div class="content">
-    <h2>{{ posts[i].title }}</h2>
-    <div>{{ posts[i].description }}</div>
-    <a href=" {{ '/post/%s'%posts[i].id }}">Click to read more</a>
+    <div class="post-snippet">
+        <h2>{{ posts[i].title }}</h2>
+        <div>{{ posts[i].description }}</div>
+        <a href=" {{ '/post/%s'%posts[i].id }}">Click to read more</a>
+    </div>
 </div>
