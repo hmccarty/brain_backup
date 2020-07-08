@@ -41,24 +41,25 @@ from . import db
 @current_app.route('/')
 def home():
     posts = db.get_posts(orderByDate=True)
-    return render_template('home.html', posts=posts)
+    return render_template('home.html', current='home', posts=posts)
 
 @current_app.route('/post/<int:post_id>')
 def post(post_id):
     post = db.get_posts(id=post_id)
     tags =  db.get_tags(post_ref=post_id)
     return render_template('post.html',
+                           current='journal',
                            post=post,
                            tags=tags)
 
 @current_app.route('/journal')
 def journal():
-    return render_template('journal.html')
+    return render_template('journal.html', current='journal')
 
 @current_app.route('/quotes')
 def quotes():
-    return render_template('quotes.html')
+    return render_template('quotes.html', current='quotes')
 
 @current_app.route('/gallery')
 def gallery():
-    return render_template('gallery.html')
+    return render_template('gallery.html', current='gallery')

@@ -5,9 +5,28 @@
         hsan's brain bank
     </h1>
     <nav>
-        <a href="/">home</a>
-        <a href="/journal">journal</a>
-        <a href="/quotes">quotes</a>
-        <a href="/gallery">gallery</a>
+        {% if current=="home" %}
+            <a href="/" class="current">home</a>
+        {% else %}
+            <a href="/">home</a>
+        {% endif %}
+
+        {% if current=="journal" %}
+            <a href="/journal" class="current">journal</a>
+        {% else %}
+            <a href="/journal">journal</a>
+        {% endif %}
+
+        {% if current=="quotes" %}
+            <a href="/quotes" class="current">quotes</a>
+        {% else %}
+            <a href="/quotes">quotes</a>
+        {% endif %}
+
+        {% if current=="gallery" %}
+            <a href="/gallery" class="current">gallery</a>
+        {% else %}
+            <a href="/gallery">gallery</a>
+        {% endif %}
     </nav>
 </header>

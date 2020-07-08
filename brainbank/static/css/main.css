@@ -31,7 +31,14 @@ h3 {
 a {
     color: #35698f;
     font: 15px 'Ubuntu', 'Lucida Bright';
+    padding: 5px 5px;
     text-decoration: None;
+}
+
+.title {
+    color: white;
+    font: 20px 'Ubuntu', 'Lucida Bright';
+    margin: 15px 0 0 0;
 }
 
 .content {
