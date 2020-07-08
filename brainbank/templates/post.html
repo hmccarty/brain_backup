@@ -2,10 +2,12 @@
 
 {% block content %}
     <div class="content">
-        <h2>{{ post.title }}</h2>
-        {% for i in post.tags %}
-            <h3>{{ i }}</h3>
-        {% endfor %}
-        <div contenteditable="true">{{ post.content | safe }}</div>
+        <div class="post">
+            <h2>{{ post[0]['title'] }}</h2>
+            {% for i in tags %}
+                <h3>{{ i['name'] }}</h3>
+            {% endfor %}
+            {{ post[0]['body'] | safe }}
+        </div>
     </div>
 {% endblock %}

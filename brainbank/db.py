@@ -25,14 +25,22 @@ def get_db():
             detect_types=sqlite3.PARSE_DECLTYPES
         )
         g.db.row_factory = sqlite3.Row
-
-        return g.db
+    return g.db
 
 def query_db(query, args=()):
     cur = get_db().execute(query, args)
     rv = cur.fetchall()
     cur.close()
     return rv
+
+def insert_db(insert, args=()):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute(insert, args)
+    db.commit()
+    rv = cur.lastrowid
+    cur.close()
+    return rv   
 
 def get_posts(startDate=None, endDate=None, orderByDate=False, \
               tags=None, id=None, values=["*"], limit=None):
@@ -73,44 +81,48 @@ def get_posts(startDate=None, endDate=None, orderByDate=False, \
         query += 'LIMIT ? '
         args.append(limit)
 
-    return query_db(query, tuple(args))
+    return query_db(query, list(args))
 
 def get_tags(post_ref=None):
     query = 'SELECT * FROM '
     query += 'post_tag INNER JOIN tag ON post_tag.tag_ref = tag.id '
+    args = []
     
-    if post_id:
+    if post_ref:
         query += 'WHERE '
         query += '? = post_tag.post_ref '
-        args.append(id)
+        args.append(post_ref)
 
-    return query_db(query, tuple(args))
+    return query_db(query, args)
+    
 
 def add_post(path):
-    db = get_db()
     post = Frontmatter.read_file(path)
+    body = markdown.markdown(post['body'])
 
     sql = ('INSERT INTO post(title, description, body) '
            'VALUES (?, ?, ?)')
-    db.cursor().execute(sql, (post['attributes']['title'],
-                              post['attributes']['description'],
-                              post['body']))
-    db.commit()
+    post_ref = insert_db(sql, (post['attributes']['title'],
+                               post['attributes']['description'],
+                               body))
+    print (post_ref)
 
     tags = post['attributes']['tags']
     for tag in tags:
-        print(tag)
-        query = ('SELECT * FROM tag WHERE tag.name = ?')
-        if db.execute(query, (tag)).fetchall() == None:
+        tag_ref = None
+        query = ('SELECT tag.id FROM tag WHERE tag.name = ?')
+        found_tag = query_db(query, [tag])
+        if not found_tag:
             sql = ('INSERT INTO tag(name) '
                 'VALUES (?)')
-            db.cursor().execute(sql, (tag))
+            tag_ref = insert_db(sql, [tag])
+        else:
+            tag_ref = found_tag[0]['id']
         
         sql = ('INSERT INTO post_tag(post_ref, tag_ref) '
             'VALUES (?, ?)')
-        db.cursor().execute(sql, (tag))
-    
-    db.commit()
+        insert_db(sql, [post_ref, tag_ref])
+
     return True
 
 @app.teardown_appcontext

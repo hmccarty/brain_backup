@@ -46,7 +46,7 @@ def home():
 @current_app.route('/post/<int:post_id>')
 def post(post_id):
     post = db.get_posts(id=post_id)
-    tags = db.get_tags(post_ref=post_id)
+    tags =  db.get_tags(post_ref=post_id)
     return render_template('post.html',
                            post=post,
                            tags=tags)

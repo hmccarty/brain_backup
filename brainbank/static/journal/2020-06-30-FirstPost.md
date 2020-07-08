@@ -3,7 +3,7 @@ title: First Blog Post
 description: In this post, I discuss future plans for the site and test to see if it works.
 tags:
 - general
-- web applcations
+- web applications
 - flask
 ---
 
