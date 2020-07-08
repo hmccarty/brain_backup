@@ -1,12 +1,17 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
+
     <div class="content">
         <div class="post">
             <h2>{{ post[0]['title'] }}</h2>
-            {% for i in tags %}
-                <h3>{{ i['name'] }}</h3>
-            {% endfor %}
+            Tags:
+            <ul>
+                {% for i in tags %}
+                    <li>{{ i['name'] }}</li>
+                {% endfor %}
+            </ul>
             {{ post[0]['body'] | safe }}
         </div>
     </div>
