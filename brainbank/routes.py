@@ -32,7 +32,7 @@ Todo:
 
 from datetime import datetime as dt
 
-from flask import current_app, g, render_template
+from flask import current_app, g, render_template, request
 from flask.cli import with_appcontext
 
 from . import db
@@ -52,9 +52,18 @@ def post(post_id):
                            post=post,
                            tags=tags)
 
-@current_app.route('/journal')
+@current_app.route('/journal', methods=["GET", "POST"])
 def journal():
-    return render_template('journal.html', current='journal')
+    if request.method == "POST":
+        start = request.form['start']
+        end = request.form['end']
+        tags = request.form.getlist('tags')
+        posts = db.get_posts(startDate=start, endDate=end, tags=tags)
+        return render_template('journal.html', current='journal', posts=posts)
+    else:
+        tags = db.get_tags()
+        return render_template('journal.html', current='journal', tags=tags, searching=True)
+    
 
 @current_app.route('/quotes')
 def quotes():

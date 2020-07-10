@@ -1,9 +1,8 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <div class="title">Recent Posts</div>
     <div class="content">
-        {% for i in range(1) %}
+        {% for i in range(posts | length) %}
             {% include 'post-snippet.html' %}
         {% endfor %}
     </div>
