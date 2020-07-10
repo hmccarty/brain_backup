@@ -7,13 +7,13 @@
 
             <div class="filter" id="tag">
                 <h2>filter by tag</h2>
-                <select id="tag-filter" name="tags" multiple>
+                <fieldset id="tag-filter">
                     {% for t in tags %}
-                        <option value={{ t['id'] }} label={{ t['name'] }}>
+                        <input type="checkbox" name="tags" value={{ t['id'] }}>
                             {{ t['name'] }}
-                        </option>
+                        </input>
                     {% endfor %}
-                </select>
+                    </fieldset>
             </div>
             <div class="filter" id="date">
                 <h2>filter by date</h2>
