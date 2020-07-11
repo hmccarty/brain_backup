@@ -28,6 +28,12 @@ h3 {
     margin: 0 0 5px 0;
 }
 
+h4 {
+    color: white;
+    font: 20px 'Ubuntu', 'Lucida Bright';
+    margin: 5px;
+}
+
 a {
     color: #35698f;
     font: 15px 'Ubuntu', 'Lucida Bright';
@@ -45,8 +51,12 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 20px 0px;
+    padding: 20px;
     width: 500px;
+}
+
+.content > div {
+    margin: 5px;
 }
 
 .post-snippet {

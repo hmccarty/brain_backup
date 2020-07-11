@@ -1,0 +1,24 @@
+.filter {
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px 10px;
+    width: 500px;
+}
+
+.filter-list {
+    list-style: none;
+    overflow-x: visible;
+    width: 400px;
+}
+
+.filter-list li {
+    display: inline-block;
+}
+
+.filter-list li:after {
+    content: ', '
+}
+
+.filter-list li:last-child:after {
+    content: ''
+}

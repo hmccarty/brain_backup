@@ -42,17 +42,26 @@ def insert_db(insert, args=()):
     cur.close()
     return rv   
 
-def get_posts(startDate=None, endDate=None, orderByDate=False, \
+def get_posts(startDate=None, endDate=None, orderByDate=True, \
               tags=None, id=None, values=["*"], limit=None):
     query = 'SELECT '
     args = []
     query += ', '.join(values)
     query += ' FROM post '
+
+    if tags:
+        query += 'INNER JOIN ( '
+        query += 'SELECT post_ref FROM post_tag '
+        tag_list = ','.join('?' * len(tags))
+        query += f'WHERE tag_ref IN ({tag_list}) '
+        args.extend(tags)
+        query += 'GROUP BY post_ref ) '
+        query += 'ON id = post_ref '
     
     firstInList = True
     if startDate:
         query += 'WHERE '
-        query += '? <= post.created '
+        query += '? <= created '
         args.append(startDate)
         firstInList = False
 
@@ -62,7 +71,7 @@ def get_posts(startDate=None, endDate=None, orderByDate=False, \
         else:
             query += 'WHERE ' 
             firstInList = False
-        query += '? > post.created '
+        query += '? > created '
         args.append(endDate)
     
     if id:
@@ -71,11 +80,11 @@ def get_posts(startDate=None, endDate=None, orderByDate=False, \
         else:
             query += 'WHERE ' 
             firstInList = False
-        query += '? = post.id '
+        query += '? = id '
         args.append(id)
 
     if orderByDate:
-        query += 'ORDER BY post.created DESC '
+        query += 'ORDER BY created DESC '
 
     if limit:
         query += 'LIMIT ? '
@@ -86,6 +95,7 @@ def get_posts(startDate=None, endDate=None, orderByDate=False, \
 def get_tags(post_ref=None):
     query = 'SELECT * FROM '
     query += 'post_tag INNER JOIN tag ON post_tag.tag_ref = tag.id '
+    query += 'GROUP BY tag_ref '
     args = []
     
     if post_ref:
@@ -105,7 +115,6 @@ def add_post(path):
     post_ref = insert_db(sql, (post['attributes']['title'],
                                post['attributes']['description'],
                                body))
-    print (post_ref)
 
     tags = post['attributes']['tags']
     for tag in tags:

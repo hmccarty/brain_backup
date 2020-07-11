@@ -1,7 +1,38 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <div class="container">
-        
-    </div>
+    {% if searching == True %}
+        <form class="content" method="POST" action="/journal">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/filter.css') }}">
+
+            <div class="filter" id="tag">
+                <h2>filter by tag</h2>
+                <fieldset id="tag-filter">
+                    {% for t in tags %}
+                        <input type="checkbox" name="tags" value={{ t['id'] }}>
+                            {{ t['name'] }}
+                        </input>
+                    {% endfor %}
+                    </fieldset>
+            </div>
+            <div class="filter" id="date">
+                <h2>filter by date</h2>
+                <label for="start">Start date:</label>
+                <input type="date" name="start">
+                <label for="end">End date:</label>
+                <input type="date" name="end">
+            </div>
+            <input type="submit" value="Submit">
+        </div>
+    {% else %}
+        <div class="content">
+            {% if posts %}
+                {% for i in range(posts | length) %}
+                    {% include 'post-snippet.html' %}
+                {% endfor %}
+            {% else %}
+                <h4> No posts found. </h4>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endblock %}
