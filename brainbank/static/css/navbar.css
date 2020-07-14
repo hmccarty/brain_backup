@@ -18,6 +18,11 @@ nav {
     width: 500px;
 }
 
+nav a {
+    font: 20px 'Ubuntu', 'Lucida Bright';
+    padding: 5px 5px;
+}
+
 a.current {
     outline-style: inset;
 }

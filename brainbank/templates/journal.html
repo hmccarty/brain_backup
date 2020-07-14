@@ -1,38 +1,47 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    {% if searching == True %}
-        <form class="content" method="POST" action="/journal">
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/filter.css') }}">
+    <form class="content-alternating-boxes" method="POST" action="/journal">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/filter.css') }}">
 
-            <div class="filter" id="tag">
-                <h2>filter by tag</h2>
-                <fieldset id="tag-filter">
-                    {% for t in tags %}
+        <div class="filter" id="tag">
+            <h2>filters</h2>
+            <fieldset id="tag-filter">
+                {% for t in tags %}
+                    {% if (t['id'] | string) in request_tags %}
+                        <input type="checkbox" name="tags" value={{ t['id'] }} checked>
+                            {{ t['name'] }}
+                        </input>
+                    {% else %}
                         <input type="checkbox" name="tags" value={{ t['id'] }}>
                             {{ t['name'] }}
                         </input>
-                    {% endfor %}
-                    </fieldset>
-            </div>
-            <div class="filter" id="date">
-                <h2>filter by date</h2>
-                <label for="start">Start date:</label>
-                <input type="date" name="start">
-                <label for="end">End date:</label>
-                <input type="date" name="end">
-            </div>
-            <input type="submit" value="Submit">
-        </div>
-    {% else %}
-        <div class="content">
-            {% if posts %}
-                {% for i in range(posts | length) %}
-                    {% include 'post-snippet.html' %}
+                    {% endif %}
                 {% endfor %}
+            </fieldset>
+
+            <label for="start">Start date:</label>
+            {% if request_start %}
+                <input type="date" name="start" value={{request_start}}>
             {% else %}
-                <h4> No posts found. </h4>
+                <input type="date" name="start">
             {% endif %}
+
+            <label for="end">End date:</label>
+            {% if request_end %}
+                <input type="date" name="end" value={{request_end}}>
+            {% else %}
+                <input type="date" name="end">
+            {% endif %}
+            <input type="submit" value="apply">
         </div>
-    {% endif %}
+        {% for i in range(posts | length) %}
+            {% include 'post-snippet.html' %}
+        {% endfor %}
+        {%  if not posts %}
+            <div class="snippet">
+                <h2>No posts found.</h2>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -95,13 +95,14 @@ def get_posts(startDate=None, endDate=None, orderByDate=True, \
 def get_tags(post_ref=None):
     query = 'SELECT * FROM '
     query += 'post_tag INNER JOIN tag ON post_tag.tag_ref = tag.id '
-    query += 'GROUP BY tag_ref '
     args = []
     
     if post_ref:
         query += 'WHERE '
         query += '? = post_tag.post_ref '
         args.append(post_ref)
+
+    query += 'GROUP BY tag_ref '
 
     return query_db(query, args)
     

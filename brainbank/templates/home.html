@@ -1,9 +1,33 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <div class="content">
+    <div class="content-alternating-boxes">
+        <div class="snippet">
+            <h2>Welcome!</h2>
+            <div>
+                My name is Harrison McCarty and this is where I store recent things I've learned. 
+                Part of the reason I've set up this website is to push myself to be more reflective on new subjects and create a deeper undestanding.
+                <br /><br />
+                To learn more about me or get in contact, visit my <a href="/about">about</a> page.
+            </div>
+        </div>
+        <div class="snippet">
+            <h2><a href="/journal">Posts</a></h2>
+            <div>
+                This is where you can find any topic I may write about. I try to organize everything by tags to make it easier to find content you may be interested in.
+            </div>
+        </div>
+        <div class="snippet">
+            <h2><a href="/gallery">Gallery</a></h2>
+            <div>Sometimes pictures make more sense. So I store all content used in posts or just uploaded individually here.</div>
+        </div>
+        <div class="snippet">
+            <h2>Recent posts:</h2>
+        </div>
+
         {% for i in range(posts | length) %}
             {% include 'post-snippet.html' %}
         {% endfor %}
+    
     </div>
 {% endblock %}

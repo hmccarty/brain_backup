@@ -6,10 +6,12 @@ body {
 
 .layout {
     height: 100%;
+    width: 100%;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: auto;
 
     background-color: #292933;
 }
@@ -19,12 +21,12 @@ h1 {
 }
 
 h2 {
-    font: 20px 'Ubuntu', 'Lucida Bright';
+    font: 30px 'Ubuntu', 'Lucida Bright';
     margin: 0 0 5px 0;
 }
 
 h3 {
-    font: 15px 'Ubuntu', 'Lucida Bright';
+    font: 25px 'Ubuntu', 'Lucida Bright';
     margin: 0 0 5px 0;
 }
 
@@ -36,8 +38,6 @@ h4 {
 
 a {
     color: #35698f;
-    font: 15px 'Ubuntu', 'Lucida Bright';
-    padding: 5px 5px;
     text-decoration: None;
 }
 
@@ -47,23 +47,29 @@ a {
     margin: 15px 0 0 0;
 }
 
-.content {
+.content-alternating-boxes {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
     padding: 20px;
-    width: 500px;
+    width: 65%;
 }
 
-.content > div {
-    margin: 5px;
+.content-alternating-boxes > div {
+    min-width: 400px;
+    width: 47%;
+    margin-bottom: 2%;
 }
 
-.post-snippet {
+.content-alternating-boxes > div:nth-child(3n-2) {
+    width: 100%
+}
+
+.snippet {
     background-color: white;
     border-radius: 5px;
-    padding: 10px 10px;
-    width: 500px;
+    padding: 15px 10px;
+    font: 20px 'Ubuntu', 'Lucida Bright';
 }
 
 .post {
