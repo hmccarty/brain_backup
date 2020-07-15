@@ -40,7 +40,7 @@ from . import db
 @with_appcontext
 @current_app.route('/')
 def home():
-    posts = db.get_posts(orderByDate=True)
+    posts = db.get_posts(orderByDate=True, limit=2)
     return render_template('home.html', current='home', posts=posts)
 
 @current_app.route('/post/<int:post_id>')
@@ -55,19 +55,26 @@ def post(post_id):
 
 @current_app.route('/journal', methods=["GET", "POST"])
 def journal():
+    tags = db.get_tags()
+    request_start = None
+    request_end = None
+    request_tags = []
+
     if request.method == "POST":
-        start = request.form['start']
-        end = request.form['end']
-        tags = request.form.getlist('tags')
-        posts = db.get_posts(startDate=start, endDate=end, tags=tags)
-        return render_template('journal.html', current='journal', posts=posts)
+        request_start = request.form['start']
+        request_end = request.form['end']
+        request_tags = request.form.getlist('tags')
+        posts = db.get_posts(startDate=request_start, endDate=request_end, tags=request_tags)   
     else:
-        tags = db.get_tags()
-        return render_template('journal.html', current='journal', tags=tags, searching=True)
+        posts = db.get_posts(orderByDate=True, limit=5)
+    print(request_tags)
+    return render_template('journal.html', current='journal', tags=tags, posts=posts, \
+                                           request_start=request_start, request_end=request_end, \
+                                           request_tags=request_tags)
     
 
 @current_app.route('/about')
-def quotes():
+def about():
     return render_template('about.html', current='about')
 
 @current_app.route('/gallery')
