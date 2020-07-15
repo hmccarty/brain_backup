@@ -47,6 +47,7 @@ def home():
 def post(post_id):
     post = db.get_posts(id=post_id)
     tags =  db.get_tags(post_ref=post_id)
+    print(tags)
     return render_template('post.html',
                            current='journal',
                            post=post,
@@ -65,9 +66,9 @@ def journal():
         return render_template('journal.html', current='journal', tags=tags, searching=True)
     
 
-@current_app.route('/quotes')
+@current_app.route('/about')
 def quotes():
-    return render_template('quotes.html', current='quotes')
+    return render_template('about.html', current='about')
 
 @current_app.route('/gallery')
 def gallery():
