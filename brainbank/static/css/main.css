@@ -68,11 +68,21 @@ a {
     font: 20px 'Ubuntu', 'Lucida Bright';
 }
 
+.post-snippet-header {
+    font: 30px 'Ubuntu', 'Lucida Bright';
+    margin: 0 0 5px 0;
+}
+
 .post {
     background-color: #eeeeee;
     border-radius: 5px;
     padding: 10px 10px;
     width: 500px;
+}
+
+.post-content {
+    color: #eeeeee;
+    font: 20px 'Ubuntu', 'Lucida Bright';
 }
 
 @media screen and (max-width: 600px) {
