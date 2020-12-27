@@ -6,13 +6,14 @@
     <div class="content">
         <div class="post">
             <h2>{{ post[0]['title'] }}</h2>
-            Tags:
-            <ul>
-                {% for i in tags %}
-                    <li>{{ i['name'] }}</li>
-                {% endfor %}
-            </ul>
-            {{ post[0]['body'] | safe }}
+            <h4>Tags:
+                <ul>
+                    {% for i in tags %}
+                        <li>{{ i['name'] }}</li>
+                    {% endfor %}
+                </ul>
+            </h4>
+            <h3>{{ post[0]['body'] | safe }}</h3>
         </div>
     </div>
 {% endblock %}

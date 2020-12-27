@@ -26,14 +26,12 @@ h2 {
 }
 
 h3 {
-    font: 25px 'Ubuntu', 'Lucida Bright';
-    margin: 0 0 5px 0;
+    font: 20px 'Ubuntu', 'Lucida Bright';
 }
 
 h4 {
-    color: #eeeeee;
-    font: 20px 'Ubuntu', 'Lucida Bright';
-    margin: 5px;
+    color: #00adb5;
+    font: 16px 'Ubuntu', 'Lucida Bright';
 }
 
 a {
@@ -91,11 +89,10 @@ a {
     border-radius: 5px;
     padding: 10px 10px;
     margin-top: 10px;
-    width: 500px;
+    width: 100%;
 }
 
 .post-content {
-    color: #eeeeee;
     font: 20px 'Ubuntu', 'Lucida Bright';
 }
 
