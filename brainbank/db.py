@@ -11,6 +11,7 @@ def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
     app.cli.add_command(add_post_command)
+    app.cli.add_command(add_photo_command)
 
 def init_db():
     db = get_db()
@@ -105,7 +106,17 @@ def get_tags(post_ref=None):
     query += 'GROUP BY tag_ref '
 
     return query_db(query, args)
+
+def get_photos(photo_id=None):
+    query = 'SELECT * FROM photo '
+    args = []
     
+    if photo_id:
+        query += 'WHERE '
+        query += '? = photo.id '
+        args.append(photo_id)
+
+    return query_db(query, args) 
 
 def add_post(path):
     post = Frontmatter.read_file(path)
@@ -130,8 +141,16 @@ def add_post(path):
             tag_ref = found_tag[0]['id']
         
         sql = ('INSERT INTO post_tag(post_ref, tag_ref) '
-            'VALUES (?, ?)')
+               'VALUES (?, ?)')
         insert_db(sql, [post_ref, tag_ref])
+
+    return True
+
+def add_photo(title, path):
+    path = path.split("brainbank/static/",1)[1]
+    sql = ('INSERT INTO photo(title, path) '
+           'VALUES (?, ?)')
+    post_ref = insert_db(sql, [title, path])
 
     return True
 
@@ -158,3 +177,14 @@ def add_post_command(path):
         click.echo('Post successfully added.')
     else:
         click.echo('Post upload failed.')
+
+@click.command('add-photo')
+@click.argument('title')
+@click.argument('path')
+@with_appcontext
+def add_photo_command(title, path):
+    """Add new photo to the database."""
+    if add_photo(title, path):
+        click.echo('Photo successfully added.')
+    else:
+        click.echo('Photo upload failed.')

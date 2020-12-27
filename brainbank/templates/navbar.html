@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
 
     <h1>
-        hsan's brain bank
+        harrison's brain bank
     </h1>
     <nav>
         {% if current=="home" %}
@@ -12,9 +12,9 @@
         {% endif %}
 
         {% if current=="journal" %}
-            <a href="/journal" class="current">posts</a>
+            <a href="/posts" class="current">posts</a>
         {% else %}
-            <a href="/journal">posts</a>
+            <a href="/posts">posts</a>
         {% endif %}
 
         {% if current=="gallery" %}

@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="content">
+        <form class="content-alternating-boxes" method="POST" action="/posts">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/filter.css') }}">
+    
+            <div class="filter" id="tag">
+                <h2>Filters</h2>
+                <fieldset id="tag-filter">
+                    {% for t in tags %}
+                        {% if (t['id'] | string) in request_tags %}
+                            <input type="checkbox" name="tags" value={{ t['id'] }} checked>
+                                {{ t['name'] }}
+                            </input>
+                        {% else %}
+                            <input type="checkbox" name="tags" value={{ t['id'] }}>
+                                {{ t['name'] }}
+                            </input>
+                        {% endif %}
+                    {% endfor %}
+                </fieldset>
+    
+                <label for="start">Start date:</label>
+                {% if request_start %}
+                    <input type="date" name="start" value={{request_start}}>
+                {% else %}
+                    <input type="date" name="start">
+                {% endif %}
+    
+                <label for="end">End date:</label>
+                {% if request_end %}
+                    <input type="date" name="end" value={{request_end}}>
+                {% else %}
+                    <input type="date" name="end">
+                {% endif %}
+                <input type="submit" value="apply">
+            </div>
+            {% for i in range(posts | length) %}
+                {% include 'post-snippet.html' %}
+            {% endfor %}
+            {%  if not posts %}
+                <div class="post-snippet">
+                    <h2>No posts found.</h2>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

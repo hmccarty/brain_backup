@@ -47,16 +47,29 @@ a {
     margin: 15px 0 0 0;
 }
 
+.content {
+    margin-top: 20px;
+    width: 65%;
+}
+
+.content-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.content-boxes > div {
+    width: 100%;
+    margin-bottom: 2%;
+}
+
 .content-alternating-boxes {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 20px;
-    width: 65%;
 }
 
 .content-alternating-boxes > div {
-    min-width: 400px;
     width: 47%;
     margin-bottom: 2%;
 }
@@ -77,6 +90,7 @@ a {
     background-color: #eeeeee;
     border-radius: 5px;
     padding: 10px 10px;
+    margin-top: 10px;
     width: 500px;
 }
 
@@ -85,12 +99,8 @@ a {
     font: 20px 'Ubuntu', 'Lucida Bright';
 }
 
-@media screen and (max-width: 600px) {
-    .content {
-        width: auto;
-    }
-
-    .post-snippet {
-        width: auto;
+@media screen and (max-width: 1300px) {
+    .content-alternating-boxes > div {
+        width: 100%;
     }
 }

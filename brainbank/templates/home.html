@@ -1,39 +1,42 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <div class="content-alternating-boxes">
-        <div class="post-snippet">
-            <h2>welcome!</h2>
-            <div>
-                most people call me harrison, but citizens of this place refer to me as: 'hsan'.
-                this is my subspace of the internet, so naturally i call the shots around here. luckily
-                this world only has three golden rules: no capital letters, no big-tech buzzwords, and no silly
-                css frameworks. we value content and strive to create a place of legitimate discussion, without
-                relying on seo marketing.
-                <br /><br />
-                To learn more about me or get in contact, visit my <a href="/about">about</a> page.
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <div class="content">
+        <div class="content-boxes">
+            <div class="post-snippet">
+                <h2>Welcome!</h2>
+                <div>
+                    This is my subspace of the internet where I share things I find interesting /
+                    document my work. I am by no means a web-dev, so let me know if you experience
+                    any issues while browsing or just have complaints about my lack of care for css.
+                    <br /><br />
+                    To learn more about me or get in contact, visit my <a href="/about">about</a> page.
+                </div>
             </div>
         </div>
-        <div class="post-snippet">
-            <h2><a href="/journal">posts</a></h2>
-            <div>
-                This is where you can find any topic I may write about. I try to organize everything by tags to make it easier to find content you may be interested in.
+        <div class="content-alternating-boxes">
+            <div class="post-snippet">
+                <h2><a href="/posts">Posts</a></h2>
+                <div>
+                    This is where you can find any topic I may write about. I try to organize everything by tags to make it easier to find content you may be interested in.
+                </div>
+            </div>
+            <div class="post-snippet">
+                <h2><a href="/gallery">Gallery</a></h2>
+                <div>
+                    Sometimes pictures make more sense. So I store all content used in posts or just uploaded individually here.
+                </div>
             </div>
         </div>
-        <div class="post-snippet">
-            <h2><a href="/gallery">gallery</a></h2>
-            <div>
-                Sometimes pictures make more sense. So I store all content used in posts or just uploaded individually here.
-            </div>
+    
+        <div style="color:  #eeeeee">
+            <h2>Recent posts:</h2>
         </div>
-    </div>
-
-    <div style="color:  #eeeeee">
-        <h2>recent posts:</h2>
-    </div>
-    <div class="content-alternating-boxes">
-        {% for i in range(posts | length) %}
-            {% include 'post-snippet.html' %}
-        {% endfor %}
+        <div class="content-alternating-boxes">
+            {% for i in range(posts | length) %}
+                {% include 'post-snippet.html' %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

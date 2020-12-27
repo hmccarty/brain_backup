@@ -1,7 +1,10 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <div class="container">
-        
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css') }}">
+    <div class="content">
+        {% for i in range(photos | length) %}
+            <img src="{{ url_for('static', filename=photos[i].path) }}" alt="{{ photos[i].title }}">
+        {% endfor %}
     </div>
 {% endblock %}
