@@ -1,2 +1,2 @@
 # Brain Bank
-Static website to display and search posts.
+Personal site to archive lessons learned and things I find interesting.
