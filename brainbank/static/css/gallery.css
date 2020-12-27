@@ -1,5 +1,6 @@
-.content {
+.photo-grid {
     line-height: 0;
+    width: 100%;
     -webkit-column-count: 5;
     -webkit-column-gap:   0px;
     -moz-column-count:    5;
@@ -9,7 +10,7 @@
 }
 
   
-.content img {
+.photo-grid img {
     max-width: 200px !important;
     height: auto !important;
 }

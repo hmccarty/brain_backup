@@ -3,8 +3,16 @@
 {% block content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css') }}">
     <div class="content">
-        {% for i in range(photos | length) %}
-            <img src="{{ url_for('static', filename=photos[i].path) }}" alt="{{ photos[i].title }}">
-        {% endfor %}
+        {% if posts %}
+            <div class="photo-grid">
+                {% for i in range(photos | length) %}
+                    <img src="{{ url_for('static', filename=photos[i].path) }}" alt="{{ photos[i].title }}">
+                {% endfor %}
+            </div>
+        {% else %}
+            <div style="color: #eeeeee; text-align:center;">
+                <h2>No images yet!</h2>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
