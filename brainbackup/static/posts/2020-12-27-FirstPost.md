@@ -33,4 +33,4 @@ For now though, we'll take things one step at a time. If you don't hear
 from me in the next few months, then assume this has been another
 project lost to lack of time.
 
-Best wishes!
+See ya!

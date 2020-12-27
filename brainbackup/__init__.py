@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Sets configuration variables using the environment.
+""" Initializes Flask configuration.
 
 BSD 3-Clause License
 
@@ -33,16 +33,23 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-from os import environ, path
-from dotenv import load_dotenv
+from flask import Flask
+import os
 
-basedir = path.abspath(path.dirname(__file__))
-load_dotenv(path.join(basedir, '.env'))
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object('config.Config')
 
-class Config(object):
-    # General Config
-    FLASK_APP = environ.get('FLASK_APP')
-    SECRET_KEY = environ.get('SECRET_KEY')
-
-    # Database
-    DATABASE_URI = environ.get('DATABASE_URI')
+    # Ensure the instance folder exists
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
+    
+    with app.app_context():
+        from . import db
+        from . import routes
+    
+        db.init_app(app)
+        
+        return app
