@@ -37,6 +37,7 @@ from flask import current_app as app, g
 from flask.cli import with_appcontext
 from datetime import datetime as dt
 from frontmatter import Frontmatter
+from os import walk
 import sqlite3
 import markdown
 import click
@@ -44,6 +45,7 @@ import click
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+    app.cli.add_command(update_db_command)
     app.cli.add_command(add_post_command)
     app.cli.add_command(add_photo_command)
 
@@ -52,6 +54,13 @@ def init_db():
 
     with app.open_resource('./schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
+
+def update_db():
+    db = get_db()
+
+    for (dirpath, dirnames, filenames) in walk('./brainbackup/static/posts'):
+        for f in filenames:
+            add_post('{}/{}'.format(dirpath, f))
 
 def get_db():
     if 'db' not in g:
@@ -158,9 +167,14 @@ def add_post(path):
 
     sql = ('INSERT INTO post(title, description, body) '
            'VALUES (?, ?, ?)')
-    post_ref = insert_db(sql, (post['attributes']['title'],
-                               post['attributes']['description'],
-                               body))
+
+    try:
+        post_ref = insert_db(sql, (post['attributes']['title'],
+                                post['attributes']['description'],
+                                body))
+    except sqlite3.IntegrityError:
+        print('Failed to add duplicate post')
+        return False
 
     tags = post['attributes']['tags']
     for tag in tags:
@@ -195,12 +209,20 @@ def close_db(e=None):
     if db is not None:
         db.close()
 
-@click.command('init-db')
+@click.command('create-db')
 @with_appcontext
 def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
+    update_db()
     click.echo('Initialized the database.')
+
+@click.command('update-db')
+@with_appcontext
+def update_db_command():
+    """Update the stored database."""
+    update_db()
+    click.echo('Updated database.')
 
 @click.command('add-post')
 @click.argument('path')
