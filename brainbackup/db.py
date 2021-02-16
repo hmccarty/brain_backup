@@ -62,6 +62,10 @@ def update_db():
         for f in filenames:
             add_post('{}/{}'.format(dirpath, f))
 
+    for (dirpath, dirnames, filenames) in walk('./brainbackup/static/gallery'):
+        for f in filenames:
+            add_photo(f, '{}/{}'.format(dirpath, f))
+
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect(
@@ -150,14 +154,14 @@ def get_tags(post_ref=None):
 
     return query_db(query, args)
 
-def get_photos(photo_id=None):
+def get_photos(photo_title=None):
     query = 'SELECT * FROM photo '
     args = []
     
-    if photo_id:
+    if photo_title:
         query += 'WHERE '
-        query += '? = photo.id '
-        args.append(photo_id)
+        query += '? = photo.title '
+        args.append(photo_title)
 
     return query_db(query, args) 
 

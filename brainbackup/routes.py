@@ -82,7 +82,7 @@ def about():
 def gallery():
     return render_template('gallery.html', current='gallery', photos=db.get_photos())
 
-@current_app.route('/gallery/<int:photo_id>')
-def photo(photo_id):
-    photo_path = 'static/' + db.get_photos(photo_id)[0]['path']
+@current_app.route('/gallery/<string:photo_title>')
+def photo(photo_title):
+    photo_path = 'static/' + db.get_photos(photo_title)[0]['path']
     return send_file(photo_path, mimetype='image/gif')
