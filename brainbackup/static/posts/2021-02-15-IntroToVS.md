@@ -6,68 +6,93 @@ tags:
 - vision processing
 ---
 
-### Let's Get It Started
+### Getting Started
 Visual servoing (VS) is the practice of using computer vision to control a 
 robot's motion. Anytime you pick up or manipulate an object in space, you are
 likely using innate VS techniques. As a shameless plug, you can see an example
 of visual servoing below:
 
 <a href="/gallery/IntroToVS_1.JPG">
-    <img src="/gallery/IntroToVS_1.JPG" alt="Robot Demo" width="350">
+    <img src="/gallery/IntroToVS_1.JPG" alt="Robot Demo" width="450">
 </a>
 
 In this scene, we were attempting to use visual features (retro reflective tape)
-to guide the robot to pick up field elements from the 2020 FRC game.
+to guide the robot to pick up field elements from the 2019 FRC game.
  
-This quick article is meant to articulate what I have learned on the subject
-and show how it can be applied.
+This article is meant to gently introduce the principle ideas of visual
+servoing.
 
-### The Weeds
+### Basic Idea
+There are three main components to visual servoing:
 
-The general visual servoing problem can be summarized as minimizing the
-following error:
+1. Understanding your environment visually
+
+2. Choosing the desired state of your environment
+
+3. Using control methodolgies to reach your desired state
+
+These main components can be summarized to minimizing the following error:
 
 <img src="https://latex.codecogs.com/svg.latex?\Large&space;e(t)=s(m(t), a) - s^*" title="\Large e(t)=s(m(t), a) - s^*" />
 
 Where:
 
-> <img src="https://latex.codecogs.com/svg.latex?\Large&space;a" title="\Large a" />
-is the set of additional information about a system
-
 > <img src="https://latex.codecogs.com/svg.latex?\Large&space;m(t)" title="\Large m(t)" />
 is the set of image measurements
 
+> <img src="https://latex.codecogs.com/svg.latex?\Large&space;a" title="\Large a" />
+is a set of additional information about a system
+
 > <img src="https://latex.codecogs.com/svg.latex?\Large&space;s(m(t), a)" title="\Large s(m(t), a)" />
-is the vector of actual visual features
+is the vector of actual features
 
 > <img src="https://latex.codecogs.com/svg.latex?\Large&space;s^*" title="\Large s^*" />
-is the vector of desired visual features
+is the vector of desired features
 
-The problem as stated may seem trivial. Using the equation above, we
-could simply approach this as a controls problem. However as it turns out, 
-visual servoing is more focused on solving how we determine 
-visual features, or <img src="https://latex.codecogs.com/svg.latex?\Large&space;s" title="\Large s" />
-and <img src="https://latex.codecogs.com/svg.latex?\Large&space;s^*" title="\Large s^*" />. 
-There are two general approaches to this problem: image-based (IBVS)
-and pose-based (PBVS), which we'll subsequently cover over the next two sections.
+Different visual servoing schemes arise in where error is being minimized.
+In this article, we'll cover the two generally seen methods: image-based VS 
+(IBVS) and pose-based VS (PBVS).
 
 ### Image-based Visual Servoing (IBVS)
-As the name suggests, this approach relies on pure visual data. Due
-to this, IBVS requires a relation between the pixels in a frame and the motion
-of a robot to exist. This relation is going to be known as an 
-**interaction matrix**. Using some straight-forward math, we will show how
-to derive this matrix for a majority of cases.
+Image-based visual servoing reduces error directly within the image space.
 
-First however, it helps to relate the previous parameters to the IBVS approach:
+What does this mean? 
+Essentially, our prime goal is to make our current image look like
+a desired image:
 
-> <img src="https://latex.codecogs.com/svg.latex?\Large&space;a" title="\Large a" />
-is a set of parameters related to the camera's specifications
-(e.g. focal length)
+<a href="/gallery/IntroToVS_2.JPG">
+    <img src="/gallery/IntroToVS_2.JPG" alt="IBVS Basic" width="450">
+</a>
 
-> <img src="https://latex.codecogs.com/svg.latex?\Large&space;m(t)" title="\Large m(t)" />
-is a set of pixel coordinates
+This probably prompts an obvious question: how do we control our robot to reduce
+that error?
 
-#### The Interaction Matrix
-<img src="https://latex.codecogs.com/gif.latex?\Large&space;\left\{\begin{matrix}&space;x&space;&&space;=&space;\frac{X}{Z}&space;=&space;\frac{u&space;-&space;c_u}{f\alpha}\\&space;y&space;&&space;=&space;\frac{Y}{Z}&space;=&space;\frac{v&space;-&space;c_v}{f}\\&space;\end{matrix}\right." title="\Large \left\{\begin{matrix} x & = \frac{x}{z} = \frac{u - c_u}{f\alpha}\\ y & = \frac{y}{z} = \frac{v - c_v}{f}\\ \end{matrix}\right." />
+This is where the interaction matrix comes into play.
 
-> To be updated and continued...
+The interaction matrix (<img src="https://latex.codecogs.com/gif.latex?\Large&space; L" title="L" />) defines:
+
+<img src="https://latex.codecogs.com/gif.latex?\Large&space;e=Lv" title="\Large e=Lv" />
+
+Which allows you to relate the movement of your vehicle to image-based error.
+
+I'm going to spare the math to derive <img src="https://latex.codecogs.com/gif.latex?\Large&space; L" title="L" /> as this is meant to be a simple introduction, however you can find a lot more information in [1].
+
+### Pose-based Visual Servoing (PBVS)
+Pose-based visual servoing reduces error within the cartesian space.
+
+This means we can use typical control techniques to move towards our desired
+state, but we also need to convert objects within our image to 3D space.
+
+Again this requires an interaction matrix, which projects visual features into
+3D points in cartesian space.
+
+### Conclusion
+As previously stated, this only meant to be an introduction to visual servoing.
+If you are interested in learning more, I recommend the sources below.
+
+Good luck!
+
+### Sources
+[1] https://link.springer.com/chapter/10.1007/978-3-319-32552-1_34#Sec2
+
+[2] https://control.com/technical-articles/an-overview-of-visual-servoing-for-robot-manipulators/
